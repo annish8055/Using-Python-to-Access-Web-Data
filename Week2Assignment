@@ -1,0 +1,14 @@
+import re
+import urllib.request
+
+url = ' http://py4e-data.dr-chuck.net/regex_sum_171411.txt'
+response = urllib.request.urlopen(url)
+data = response.read()      # a `bytes` object
+text = data.decode('utf-8')
+
+output = re.findall('[0-9]+',text)
+sum = 0
+for num in output:
+    sum = sum + int(num)
+
+print(sum)
