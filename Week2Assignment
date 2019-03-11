@@ -12,3 +12,7 @@ for num in output:
     sum = sum + int(num)
 
 print(sum)
+
+
+
+#SUM = 518483
