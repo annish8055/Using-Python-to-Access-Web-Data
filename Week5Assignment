@@ -1,0 +1,31 @@
+import urllib.request, urllib.parse, urllib.error
+import xml.etree.ElementTree as ET
+import ssl
+
+# Ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+
+# Read in XML from the URL
+url = input('Enter url: ')
+print ('Retrieving', url)
+xml = urllib.request.urlopen(url, context=ctx).read()
+
+# Convert the XML to a tree
+tree = ET.fromstring(xml)
+
+# Print how many characters in the XML
+print ('Retrieved',len(xml),'characters')
+
+# Get all of the count values
+tags = tree.findall('.//count')
+
+# Total all of the counts
+total = 0
+for tag in tags:
+    total += int(tag.text)
+
+print (total)
+
+#2561
