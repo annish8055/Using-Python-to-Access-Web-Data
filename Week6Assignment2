@@ -1,0 +1,41 @@
+import json
+import urllib.request,urllib.parse
+
+#http://py4e-data.dr-chuck.net/json?
+
+#sample_address = "South Federal University"
+#data_address = "Universidade Federal do Rio Grande do Sul"
+
+#Stroring the given parameters
+serviceurl = "http://py4e-data.dr-chuck.net/json?"
+api_key = 42
+while True:
+
+    address = input("Enter location: ")
+
+    if len(address) < 1 : break
+    parms = dict()
+    parms['address'] = address
+    if api_key is not False: parms['key'] = api_key
+    url = serviceurl + urllib.parse.urlencode(parms)
+    
+    print ('Retrieving',url)
+
+    uh =urllib.request.urlopen(url)
+    data = uh.read()
+    print ('Retrived',len(data),'characters')
+    print(data)
+    try: 
+        js = json.loads(data)
+    except: 
+        js = None
+    if ('status' not in js or js['status'] != 'OK'):
+        print ('==== Failure To Retrieve ====')
+        print (data)
+        continue
+
+    placeid = js["results"][0]['place_id']
+    print(js["results"][0])
+    print ("Place id",placeid)
+
+# Answer =  ChIJM-_QAU94GZURtsdLFs3QN0Y
